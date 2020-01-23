@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity">
+
+    <TextView
+        android:id="@+id/vehicleDetailsHeader"
+        android:layout_width="216dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="64dp"
+        android:text="Vehicle"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/speedtextView"
+        android:layout_width="136dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="32dp"
+        android:text="45"
+        android:textColor="#1132E9"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.643"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsTextView" />
+
+    <TextView
+        android:id="@+id/speedMetertextView"
+        android:layout_width="152dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="16dp"
+        android:text="KM/H"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speedtextView" />
+
+    <TextView
+        android:id="@+id/vehicleDetailsTextView"
+        android:layout_width="276dp"
+        android:layout_height="187dp"
+        android:layout_marginTop="12dp"
+        android:text="Registration Details"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsHeader" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,58 +2,105 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MeterTextView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main2Activity">
 
     <TextView
-        android:id="@+id/vehicleDetailsHeader"
-        android:layout_width="216dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="64dp"
-        android:text="Vehicle"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/speedtextView"
-        android:layout_width="136dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="32dp"
-        android:text="45"
+        android:id="@+id/speedTextView"
+        android:layout_width="106dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="0"
         android:textColor="#1132E9"
         android:textSize="64sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.643"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <TextView
-        android:id="@+id/speedMetertextView"
-        android:layout_width="152dp"
-        android:layout_height="103dp"
+        android:id="@+id/meterTextView"
+        android:layout_width="225dp"
+        android:layout_height="47dp"
         android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="KM/H"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speedtextView" />
+        app:layout_constraintTop_toBottomOf="@+id/speedTextView" />
 
     <TextView
-        android:id="@+id/vehicleDetailsTextView"
-        android:layout_width="276dp"
-        android:layout_height="187dp"
-        android:layout_marginTop="12dp"
-        android:text="Registration Details"
-        android:textSize="36sp"
+        android:id="@+id/speedStatusTextView"
+        android:layout_width="172dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="144dp"
+        android:gravity="center"
+        android:text="SPEED STATUS"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/meterTextView"
+        app:layout_constraintVertical_bias="0.683" />
+
+    <TextView
+        android:id="@+id/regNoTextView"
+        android:layout_width="356dp"
+        android:layout_height="22dp"
+        android:background="#00090808"
+        android:gravity="center"
+        android:text="REG"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/saccoTextView"
+        android:layout_width="356dp"
+        android:layout_height="23dp"
+        android:gravity="center"
+        android:text="SACCO"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regNoTextView" />
+
+    <TextView
+        android:id="@+id/driverTextView"
+        android:layout_width="352dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="DRIVER"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saccoTextView" />
+
+    <!--    <com.google.android.gms.maps.MapView-->
+    <!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--        android:id="@+id/mapView"-->
+    <!--        android:layout_width="403dp"-->
+    <!--        android:layout_height="400dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/driverTextView" />-->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="447dp"
+        android:layout_height="342dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driverTextView"
+        tools:context=".Main2Activity" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

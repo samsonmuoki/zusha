@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Zusha</string>
+    <string name="title_activity_speed_monitoring">Map</string>
+    <string name="GOOGLE_MAPS_API_KEY">AIzaSyCdvqkRTeufZj_Dx0YWw2NaX6MZKaCEPn0</string>
 </resources>

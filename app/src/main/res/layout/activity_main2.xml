@@ -38,15 +38,12 @@
         android:id="@+id/speedStatusTextView"
         android:layout_width="172dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="144dp"
         android:gravity="center"
         android:text="SPEED STATUS"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/meterTextView"
-        app:layout_constraintVertical_bias="0.683" />
+        app:layout_constraintTop_toBottomOf="@+id/meterTextView" />
 
     <TextView
         android:id="@+id/regNoTextView"
@@ -102,5 +99,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/driverTextView"
         tools:context=".Main2Activity" />
+
+    <TextView
+        android:id="@+id/locationTextView"
+        android:layout_width="159dp"
+        android:layout_height="73dp"
+        android:layout_marginBottom="64dp"
+        android:text="LOCATION"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

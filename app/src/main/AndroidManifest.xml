@@ -31,7 +31,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCdvqkRTeufZj_Dx0YWw2NaX6MZKaCEPn0" />
 
-        <activity android:name=".SpeedMonitoring"></activity>
+<!--        <activity android:name=".SpeedMonitoring"></activity>-->
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,7 +43,7 @@
 
         <activity android:name=".Main2Activity" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".RawMapViewActivity" />
+<!--        <activity android:name=".RawMapViewActivity" />-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -18,40 +18,55 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
-public class Main2Activity extends AppCompatActivity implements LocationListener {
+
+public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final String TAG = "Main2Activity";
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
+//    private FusedLocationProviderClient fusedLocationClient;
+
+    Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-//        TextView vehicleDetailsTextView = (TextView) findViewById(R.id.vehicleDetailsTextView);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProvider(this);
+        fetchLastLocation();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
         TextView regNoTextView = (TextView) findViewById(R.id.regNoTextView);
         TextView saccoTextView = (TextView) findViewById(R.id.saccoTextView);
         TextView driverTextView = (TextView) findViewById(R.id.driverTextView);
 
-//        String vehicleDetails = getIntent().getExtras().getString("vehicleDetails");
         String regNoDetails = getIntent().getExtras().getString("regNoDetails");
         String saccoDetails = getIntent().getExtras().getString("saccoDetails");
         String driverDetails = getIntent().getExtras().getString("driverDetails");
 
-//        vehicleDetailsTextView.setText(vehicleDetails);
         regNoTextView.setText(regNoDetails);
         saccoTextView.setText(saccoDetails);
         driverTextView.setText(driverDetails);
 
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//
-//        LocationManager lm = (LocationManager) this.getSystemService(getApplicationContext().LOCATION_SERVICE);
-//        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-//        this.onLocationChanged(null);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -63,10 +78,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                 trackSpeed();
             }
 
-
-
         }
-
 
         }
 
@@ -120,6 +132,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         if (requestCode == 1000) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 trackSpeed();
+                fetchLastLocation();
             } else {
 
                 finish();
@@ -128,6 +141,31 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         }
 
     }
+
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    currentLocation = location;
+                    Toast.makeText(getApplicationContext(),currentLocation.getLatitude()
+                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                    SupportMapFragment supportMapFragment = (SupportMapFragment)
+                            getSupportFragmentManager().findFragmentById(R.id.map);
+                    supportMapFragment.getMapAsync(Main2Activity.this);
+
+                }
+            }
+        });
+
+    }
+
 
     private void trackSpeed(){
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -158,4 +196,24 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     public void onProviderDisabled(String provider) {
 
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // Add a marker in Sydney, Australia,
+        // and move the map's camera to the same location.
+//        LatLng sydney = new LatLng(-33.852, 151.211);
+//        googleMap.addMarker(new MarkerOptions().position(sydney)
+//                .title("Marker in Sydney"));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                .title("Current Location.");
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
+        googleMap.addMarker(markerOptions);
+
+
+    }
+
 }

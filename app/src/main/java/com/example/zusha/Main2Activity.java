@@ -26,6 +26,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
@@ -37,6 +39,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
+//    double global_latitude = -1.29;
+//    double global_longitude = 36.82;
     double global_latitude;
     double global_longitude;
 
@@ -73,7 +77,41 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             //start the program if permission is granted
             if(isServicesOK()){
                 trackSpeed();
+//                trackLocation();
 //                fetchLastLocation();
+
+//                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(Main2Activity.this, new OnSuccessListener<Location>() {
+//                    @Override
+//                    public void onSuccess(Location location) {
+//                        if(location != null){
+//                            TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+//                            locationTextView.setText(location.toString());
+//                        }
+//                    }
+//                });
+                Task<Location> task = fusedLocationProviderClient.getLastLocation();
+                task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null){
+                            currentLocation = location;
+                            double longitude = currentLocation.getLongitude();
+                            double latitude = currentLocation.getLatitude();
+                            TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+                            locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
+
+                            global_latitude = latitude;
+                            global_longitude = longitude;
+
+//                            Toast.makeText(getApplicationContext(),currentLocation.getLatitude()
+//                                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+//                            SupportMapFragment supportMapFragment = (SupportMapFragment)
+//                                    getSupportFragmentManager().findFragmentById(R.id.map);
+//                            supportMapFragment.getMapAsync(Main2Activity.this);
+                        }
+                    }
+                });
+
             }
 
         }
@@ -108,15 +146,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         TextView speedTextView = (TextView) this.findViewById(R.id.speedTextView);
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
 
-        TextView locationTextView = (TextView) this.findViewById(R.id.locationTextView);
-
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
-
-        global_latitude = latitude;
-        global_longitude = longitude;
-
-        locationTextView.setText("Latitude:" + latitude + "\n"+ "Longitude:" + longitude);
 
         if (location==null){
 
@@ -139,6 +170,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         if (requestCode == 1000) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 trackSpeed();
+//                trackLocation();
 //                fetchLastLocation();
 
             } else {
@@ -174,25 +206,17 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //                    SupportMapFragment supportMapFragment = (SupportMapFragment)
 //                            getSupportFragmentManager().findFragmentById(R.id.map);
 //                    supportMapFragment.getMapAsync(Main2Activity.this);
-//
 //                }
 //            }
 //        });
 //
 //    }
 
-
-
     private void trackSpeed(){
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-//        Location location = lm.getLastKnownLocation(lm.NETWORK_PROVIDER);
-
-//        onLocationChanged(location);
-
         if (lm != null){
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
-            lm.getLastKnownLocation(lm.NETWORK_PROVIDER);
             //commented, this is from the old version
             // this.onLocationChanged(null);
         }
@@ -200,11 +224,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
 
     }
-
-//    private void trackLocation(){
-//        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//        Location location = lm.getLastKnownLocation(lm.NETWORK_PROVIDER);
-//    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -235,9 +254,12 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
         double latitude = global_latitude;
         double longitude = global_longitude;
+//        double latitude = currentLocation.getLatitude();
+//        double longitude = currentLocation.getLongitude();
 
 
         LatLng myLocation = new LatLng(latitude, longitude);
+//        LatLng myLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
         googleMap.addMarker(new MarkerOptions().position(myLocation)
                 .title("My Location"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
@@ -250,7 +272,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 //        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
 //        googleMap.addMarker(markerOptions);
-
 
     }
 

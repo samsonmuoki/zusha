@@ -9,28 +9,27 @@
 
     <TextView
         android:id="@+id/speedTextView"
-        android:layout_width="106dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="96dp"
+        android:layout_height="59dp"
         android:gravity="center"
         android:text="0"
         android:textColor="#1132E9"
-        android:textSize="64sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <TextView
         android:id="@+id/meterTextView"
-        android:layout_width="225dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="224dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="KM/H"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speedTextView" />
 
@@ -40,8 +39,9 @@
         android:layout_height="36dp"
         android:gravity="center"
         android:text="SPEED STATUS"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meterTextView" />
 
@@ -104,12 +104,14 @@
         android:id="@+id/locationTextView"
         android:layout_width="159dp"
         android:layout_height="73dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
         android:text="LOCATION"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speedStatusTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

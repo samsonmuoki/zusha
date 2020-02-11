@@ -9,6 +9,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -28,6 +31,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+//import java.util.Calendar;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
@@ -41,6 +50,11 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     private GoogleMap mMap;
 
+    private Button reportingButton;
+    private Firebase mRootRef;
+    DatabaseReference reff;
+
+    Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +72,20 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         TextView saccoTextView = (TextView) findViewById(R.id.saccoTextView);
         TextView driverTextView = (TextView) findViewById(R.id.driverTextView);
 
-        String regNoDetails = getIntent().getExtras().getString("regNoDetails");
-        String saccoDetails = getIntent().getExtras().getString("saccoDetails");
+        final String regNoDetails = getIntent().getExtras().getString("regNoDetails");
+        final String saccoDetails = getIntent().getExtras().getString("saccoDetails");
         String driverDetails = getIntent().getExtras().getString("driverDetails");
 
         regNoTextView.setText(regNoDetails);
         saccoTextView.setText(saccoDetails);
         driverTextView.setText(driverDetails);
+
+        mRootRef = new Firebase("https://deep-cascade-240110.firebaseio.com/Reports");
+
+        report = new Report();
+        reff = FirebaseDatabase.getInstance().getReference().child("Report");
+
+        reportingButton = (Button) findViewById(R.id.reportingButton);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -75,6 +96,35 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             if(isServicesOK()){
                 trackSpeed();
                 fetchLastLocation();
+
+                reportingButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+//                        Date currentTime = Calendar.getInstance().getTime();
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+                        String currentDateandTime = sdf.format(new Date());
+
+//                        report.setRegNo(regNoDetails);
+//                        report.setSacco(saccoDetails);
+////                        report.setSpeed();
+//                        report.setLocation(currentLocation.getLatitude()+","+currentLocation.getLongitude());
+//                        report.setCurrentDateandTime(currentDateandTime);
+
+                        Firebase childRefRegNo = mRootRef.child("RegNo");
+                        Firebase childRefSacco = mRootRef.child("Sacco");
+                        Firebase childRefTime = mRootRef.child("Time");
+                        Firebase childRefLocation = mRootRef.child("Location");
+                        Firebase childRefSpeed = mRootRef.child("Speed");
+
+                        childRefRegNo.setValue(regNoDetails);
+                        childRefSacco.setValue(saccoDetails);
+                        childRefTime.setValue(currentDateandTime);
+                        childRefLocation.setValue(currentLocation.getLatitude()+","+currentLocation.getLongitude());
+                        childRefSpeed.setValue("Speed KM/H");
+                    }
+                });
 
             }
 

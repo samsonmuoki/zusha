@@ -89,28 +89,25 @@
     <!--        app:layout_constraintEnd_toEndOf="parent"-->
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@+id/driverTextView" />-->
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="447dp"
         android:layout_height="342dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/driverTextView"
         tools:context=".Main2Activity" />
 
-    <TextView
-        android:id="@+id/locationTextView"
-        android:layout_width="322dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="16dp"
-        android:text="LOCATION"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/reportingButton"
+        android:layout_width="114dp"
+        android:layout_height="47dp"
+        android:text="Report"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speedStatusTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/speedStatusTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

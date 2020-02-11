@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "908598726815",
+    "firebase_url": "https://deep-cascade-240110.firebaseio.com",
+    "project_id": "deep-cascade-240110",
+    "storage_bucket": "deep-cascade-240110.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908598726815:android:339b2571c4cdf9cee392aa",
+        "android_client_info": {
+          "package_name": "com.example.zusha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908598726815-3o3ffvj041481tonii4tqto5t1rl185p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zusha",
+            "certificate_hash": "21fbd961e61074a4ac0fd8b7448d93706f58b98e"
+          }
+        },
+        {
+          "client_id": "908598726815-vo47odv05comoa6gt9d8933gbkgjp72p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbNmTGDyQxNj6kxugToM1QcEc69uQhusg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908598726815-vo47odv05comoa6gt9d8933gbkgjp72p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

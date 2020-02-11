@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/speedTextView"
-        android:layout_width="96dp"
-        android:layout_height="59dp"
+        android:layout_width="189dp"
+        android:layout_height="55dp"
         android:gravity="center"
         android:text="0"
         android:textColor="#1132E9"
@@ -25,23 +25,23 @@
         android:id="@+id/meterTextView"
         android:layout_width="224dp"
         android:layout_height="33dp"
-        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="KM/H"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/speedTextView" />
 
     <TextView
         android:id="@+id/speedStatusTextView"
-        android:layout_width="172dp"
-        android:layout_height="36dp"
+        android:layout_width="178dp"
+        android:layout_height="31dp"
         android:gravity="center"
         android:text="SPEED STATUS"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meterTextView" />
 
@@ -102,9 +102,8 @@
 
     <TextView
         android:id="@+id/locationTextView"
-        android:layout_width="159dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="322dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="16dp"
         android:text="LOCATION"
         android:textSize="18sp"

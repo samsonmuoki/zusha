@@ -43,6 +43,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //    double global_longitude = 36.82;
     double global_latitude;
     double global_longitude;
+    private GoogleMap mMap;
 
 
     @Override
@@ -155,8 +156,11 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
             speedTextView.setText(String.format("%.2f", currentSpeed)+ "" );
-            if (currentSpeed > 80){
+            if (currentSpeed < 25){
                 speedStatusTextView.setText("Over Speeding");
+                LatLng speedingLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(speedingLocation)
+                .title("Over speeding Location"));
             } else {
                 speedStatusTextView.setText("Below Limit");
             }
@@ -170,8 +174,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         if (requestCode == 1000) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 trackSpeed();
-//                trackLocation();
-//                fetchLastLocation();
+                fetchLastLocation();
 
             } else {
 
@@ -189,28 +192,41 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     }
 
-//    private void fetchLastLocation() {
-////        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-////            ActivityCompat.requestPermissions(this, new String[]
-////                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-////            return;
-////        }
-//        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-//        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-//            @Override
-//            public void onSuccess(Location location) {
-//                if (location != null){
-//                    currentLocation = location;
+    private void updateLocationUI(){
+        if (mMap == null) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+    }
+
+
+    private void fetchLastLocation() {
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]
+//                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+//            return;
+//        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    currentLocation = location;
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            new LatLng(currentLocation.getLatitude(),
+                                    currentLocation.getLongitude()), 15));
+
 //                    Toast.makeText(getApplicationContext(),currentLocation.getLatitude()
 //                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-//                    SupportMapFragment supportMapFragment = (SupportMapFragment)
-//                            getSupportFragmentManager().findFragmentById(R.id.map);
-//                    supportMapFragment.getMapAsync(Main2Activity.this);
-//                }
-//            }
-//        });
-//
-//    }
+                    SupportMapFragment supportMapFragment = (SupportMapFragment)
+                            getSupportFragmentManager().findFragmentById(R.id.map);
+                    supportMapFragment.getMapAsync(Main2Activity.this);
+                }
+            }
+        });
+
+    }
 
     private void trackSpeed(){
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -242,36 +258,20 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
-//        LatLng sydney = new LatLng(-33.852, 151.211);
-//        googleMap.addMarker(new MarkerOptions().position(sydney)
-//                .title("Marker in Sydney"));
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
 
+        mMap = googleMap;
 
-        double latitude = global_latitude;
-        double longitude = global_longitude;
-//        double latitude = currentLocation.getLatitude();
-//        double longitude = currentLocation.getLongitude();
+        updateLocationUI();
 
+        fetchLastLocation();
 
-        LatLng myLocation = new LatLng(latitude, longitude);
-//        LatLng myLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-        googleMap.addMarker(new MarkerOptions().position(myLocation)
-                .title("My Location"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(myLocation));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 5));
-
-//        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-//        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
-//                .title("Current Location.");
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
-//        googleMap.addMarker(markerOptions);
+//        LatLng myLocation = new LatLng(latitude, longitude);
+////        LatLng myLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+//        googleMap.addMarker(new MarkerOptions().position(myLocation)
+//                .title("My Location"));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(myLocation));
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 5));
 
     }
 

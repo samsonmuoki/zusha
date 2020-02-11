@@ -39,10 +39,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
-//    double global_latitude = -1.29;
-//    double global_longitude = 36.82;
-    double global_latitude;
-    double global_longitude;
     private GoogleMap mMap;
 
 
@@ -78,40 +74,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             //start the program if permission is granted
             if(isServicesOK()){
                 trackSpeed();
-//                trackLocation();
-//                fetchLastLocation();
-
-//                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(Main2Activity.this, new OnSuccessListener<Location>() {
-//                    @Override
-//                    public void onSuccess(Location location) {
-//                        if(location != null){
-//                            TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
-//                            locationTextView.setText(location.toString());
-//                        }
-//                    }
-//                });
-                Task<Location> task = fusedLocationProviderClient.getLastLocation();
-                task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null){
-                            currentLocation = location;
-                            double longitude = currentLocation.getLongitude();
-                            double latitude = currentLocation.getLatitude();
-                            TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
-                            locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
-
-                            global_latitude = latitude;
-                            global_longitude = longitude;
-
-//                            Toast.makeText(getApplicationContext(),currentLocation.getLatitude()
-//                                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-//                            SupportMapFragment supportMapFragment = (SupportMapFragment)
-//                                    getSupportFragmentManager().findFragmentById(R.id.map);
-//                            supportMapFragment.getMapAsync(Main2Activity.this);
-                        }
-                    }
-                });
+                fetchLastLocation();
 
             }
 
@@ -147,8 +110,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         TextView speedTextView = (TextView) this.findViewById(R.id.speedTextView);
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
 
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
+        double longitude = currentLocation.getLongitude();
+        double latitude = currentLocation.getLatitude();
 
         if (location==null){
 
@@ -213,15 +176,17 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             public void onSuccess(Location location) {
                 if (location != null){
                     currentLocation = location;
+                    double longitude = currentLocation.getLongitude();
+                    double latitude = currentLocation.getLatitude();
+//                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+//                    locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
+
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                             new LatLng(currentLocation.getLatitude(),
                                     currentLocation.getLongitude()), 15));
-
-//                    Toast.makeText(getApplicationContext(),currentLocation.getLatitude()
-//                    +""+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)
-                            getSupportFragmentManager().findFragmentById(R.id.map);
-                    supportMapFragment.getMapAsync(Main2Activity.this);
+//                    SupportMapFragment supportMapFragment = (SupportMapFragment)
+//                            getSupportFragmentManager().findFragmentById(R.id.map);
+//                    supportMapFragment.getMapAsync(Main2Activity.this);
                 }
             }
         });
@@ -237,7 +202,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             // this.onLocationChanged(null);
         }
         Toast.makeText(this,"Waiting for GPS connection!", Toast.LENGTH_SHORT).show();
-
 
     }
 

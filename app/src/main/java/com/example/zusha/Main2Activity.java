@@ -31,12 +31,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-//import java.util.Calendar;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+//import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
@@ -52,9 +55,10 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     private Button reportingButton;
     private Firebase mRootRef;
-    DatabaseReference reff;
 
+    DatabaseReference reff;
     Report report;
+    long reportId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,19 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         mRootRef = new Firebase("https://deep-cascade-240110.firebaseio.com/Reports");
 
         report = new Report();
-        reff = FirebaseDatabase.getInstance().getReference().child("Report");
+        reff = FirebaseDatabase.getInstance().getReference().child("Reports");
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    reportId=(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         reportingButton = (Button) findViewById(R.id.reportingButton);
 
@@ -97,6 +113,23 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                 trackSpeed();
                 fetchLastLocation();
 
+////               EDUCATREE INCREMENT VALUE OF reportId
+//                reportingButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        report.setRegNo(regNoDetails);
+//                        report.setSacco(saccoDetails);
+////                        report.setSpeed("Example KM/H");
+//                        report.setLocation(currentLocation.getLatitude()+","+currentLocation.getLongitude());
+////                        report.setCurrentDateandTime(currentDateandTime);
+//
+//                        reff.child(String.valueOf(reportId+1)).setValue(report);
+//                        Toast.makeText(Main2Activity.this, "Report Successful", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+//                TVAC add values to db
                 reportingButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -106,23 +139,20 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
                         String currentDateandTime = sdf.format(new Date());
 
-//                        report.setRegNo(regNoDetails);
-//                        report.setSacco(saccoDetails);
-////                        report.setSpeed();
-//                        report.setLocation(currentLocation.getLatitude()+","+currentLocation.getLongitude());
-//                        report.setCurrentDateandTime(currentDateandTime);
-
-                        Firebase childRefRegNo = mRootRef.child("RegNo");
-                        Firebase childRefSacco = mRootRef.child("Sacco");
-                        Firebase childRefTime = mRootRef.child("Time");
-                        Firebase childRefLocation = mRootRef.child("Location");
-                        Firebase childRefSpeed = mRootRef.child("Speed");
+                        Firebase childReportId = mRootRef.child(String.valueOf(reportId));
+                        Firebase childRefRegNo = childReportId.child("RegNo");
+                        Firebase childRefSacco = childReportId.child("Sacco");
+                        Firebase childRefTime = childReportId.child("Time");
+                        Firebase childRefLocation = childReportId.child("Location");
+                        Firebase childRefSpeed = childReportId.child("Speed");
 
                         childRefRegNo.setValue(regNoDetails);
                         childRefSacco.setValue(saccoDetails);
                         childRefTime.setValue(currentDateandTime);
-                        childRefLocation.setValue(currentLocation.getLatitude()+","+currentLocation.getLongitude());
+                        childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
+                                ", Longitude: "+currentLocation.getLongitude());
                         childRefSpeed.setValue("Speed KM/H");
+//                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
                     }
                 });
 
@@ -169,7 +199,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
             speedTextView.setText(String.format("%.2f", currentSpeed)+ "" );
-            if (currentSpeed < 25){
+            if (currentSpeed > 25){
                 speedStatusTextView.setText("Over Speeding");
                 LatLng speedingLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(speedingLocation)
@@ -286,6 +316,17 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
 //        googleMap.animateCamera(CameraUpdateFactory.newLatLng(myLocation));
 //        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 5));
+
+////        Adding multpiple markers in a google map
+//        LatLng myLocation = new LatLng(-1.484, 37.262);
+//        LatLng myLocation2 = new LatLng(-1.494, 37.272);
+//        LatLng myLocation3 = new LatLng(-1.504, 37.282);
+//        googleMap.addMarker(new MarkerOptions().position(myLocation)
+//                .title("My Location"));
+//        googleMap.addMarker(new MarkerOptions().position(myLocation2)
+//                .title("My Location2"));
+//        googleMap.addMarker(new MarkerOptions().position(myLocation3)
+//                .title("My Location3"));
 
     }
 

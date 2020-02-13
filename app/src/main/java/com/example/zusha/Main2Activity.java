@@ -78,7 +78,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
         final String regNoDetails = getIntent().getExtras().getString("regNoDetails");
         final String saccoDetails = getIntent().getExtras().getString("saccoDetails");
-        String driverDetails = getIntent().getExtras().getString("driverDetails");
+        final String driverDetails = getIntent().getExtras().getString("driverDetails");
 
         regNoTextView.setText(regNoDetails);
         saccoTextView.setText(saccoDetails);
@@ -145,14 +145,17 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         Firebase childRefTime = childReportId.child("Time");
                         Firebase childRefLocation = childReportId.child("Location");
                         Firebase childRefSpeed = childReportId.child("Speed");
+                        Firebase childRefDriver = childReportId.child("Driver");
 
                         childRefRegNo.setValue(regNoDetails);
+                        childRefDriver.setValue(driverDetails);
                         childRefSacco.setValue(saccoDetails);
                         childRefTime.setValue(currentDateandTime);
                         childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
                                 ", Longitude: "+currentLocation.getLongitude());
                         childRefSpeed.setValue("Speed KM/H");
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
+                        Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -41,5 +41,14 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button viewReportsButton = (Button) findViewById(R.id.viewReportButton);
+        viewReportsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent reports = new Intent(MainActivity.this, ReportsActivity.class);
+                startActivity(reports);
+            }
+        });
     }
 }

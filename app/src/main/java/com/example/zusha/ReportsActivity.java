@@ -1,6 +1,7 @@
 package com.example.zusha;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class ReportsActivity extends AppCompatActivity {
     private Firebase mRef;
     DatabaseReference reff;
     TextView sampleReportTextView;
+    long reportId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,8 @@ public class ReportsActivity extends AppCompatActivity {
 
         sampleReportTextView = (TextView) findViewById(R.id.sampleReportTextView);
         mRef = new Firebase("https://deep-cascade-240110.firebaseio.com/Reports");
-//        reff = FirebaseDatabase.getInstance().getReference().child("Reports").child(String.valueOf(0));
         reff = FirebaseDatabase.getInstance().getReference().child("Reports");
+//        reff = FirebaseDatabase.getInstance().getReference().child("Reports").child(String.valueOf(reportId));
 
 //        mRef.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -49,6 +51,7 @@ public class ReportsActivity extends AppCompatActivity {
                 String sampleReport = dataSnapshot.getValue().toString();
 
                 sampleReportTextView.setText(sampleReport);
+                sampleReportTextView.setMovementMethod(new ScrollingMovementMethod());
 
                 Log.v("E_Value", "Data: "+ dataSnapshot.getValue());
             }

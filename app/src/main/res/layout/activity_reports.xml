@@ -10,6 +10,7 @@
         android:id="@+id/sampleReportTextView"
         android:layout_width="287dp"
         android:layout_height="508dp"
+        android:scrollbars="vertical"
         android:text="Allreports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

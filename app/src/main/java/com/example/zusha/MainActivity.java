@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
                 String sacco = saccoEditText.getText().toString();
                 String driver = driverNameEditText.getText().toString();
 
-                String regNoDetails = "REG: " + regNo;
-                String saccoDetails = "SACCO: " + sacco;
-                String driverDetails = "DRIVER: " + driver;
+                String regNoDetails = regNo;
+                String saccoDetails = sacco;
+                String driverDetails = driver;
 
                 Intent i = new Intent(MainActivity.this, Main2Activity.class);
                 i.putExtra("regNoDetails", regNoDetails);

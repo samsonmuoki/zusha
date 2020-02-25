@@ -6,89 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/vehicleDetailsHeader"
-        android:layout_width="226dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="VEHICLE DETAILS"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageTextView" />
-
-    <EditText
-        android:id="@+id/regNoEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="REG NO"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsHeader" />
-
-    <EditText
-        android:id="@+id/saccoEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="SACCO"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regNoEditText" />
-
-    <EditText
-        android:id="@+id/driverNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="DRIVER NAME"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saccoEditText" />
-
-    <Button
-        android:id="@+id/vehicleDetailsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Enter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driverNameEditText" />
-
-    <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="291dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="Enter the Registration number and sacco of the vehicle below"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/viewReportButton"
-        android:layout_width="158dp"
-        android:layout_height="47dp"
+        android:layout_width="188dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="116dp"
         android:text="View Reports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicleDetailsButton"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintTop_toBottomOf="@+id/trackSpeedButton"
+        app:layout_constraintVertical_bias="0.375" />
+
+    <Button
+        android:id="@+id/trackSpeedButton"
+        android:layout_width="194dp"
+        android:layout_height="83dp"
+        android:layout_marginTop="104dp"
+        android:text="TRACK SPEED"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

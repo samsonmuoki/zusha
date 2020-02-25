@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnterVehicleDetailsActivity"></activity>
+        <activity android:name=".TrackSpeedActivity"></activity>
+        <activity android:name=".EnterVehicleDetailsActivity" />
         <activity android:name=".ReportsActivity" /> <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyCdvqkRTeufZj_Dx0YWw2NaX6MZKaCEPn0" /> -->

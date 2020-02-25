@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrackSpeedActivity">
+
+    <TextView
+        android:id="@+id/speedStatusTextView2"
+        android:layout_width="178dp"
+        android:layout_height="31dp"
+        android:gravity="center"
+        android:text="SPEED STATUS"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meterTextView2" />
+
+    <TextView
+        android:id="@+id/meterTextView2"
+        android:layout_width="224dp"
+        android:layout_height="33dp"
+        android:gravity="center"
+        android:text="KM/H"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speedTextView2" />
+
+    <TextView
+        android:id="@+id/speedTextView2"
+        android:layout_width="189dp"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#1132E9"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map2" />
+
+    <fragment
+        android:id="@+id/map2"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="447dp"
+        android:layout_height="342dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driverTextView2"
+        tools:context=".Main2Activity" />
+
+    <TextView
+        android:id="@+id/driverTextView2"
+        android:layout_width="273dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="DRIVER"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saccoTextView2" />
+
+    <TextView
+        android:id="@+id/saccoTextView2"
+        android:layout_width="346dp"
+        android:layout_height="37dp"
+        android:gravity="center"
+        android:text="SACCO"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regNoTextView2" />
+
+    <TextView
+        android:id="@+id/regNoTextView2"
+        android:layout_width="356dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="4dp"
+        android:background="#00090808"
+        android:gravity="center"
+        android:text="REG"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/reportSpeedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REPORT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speedStatusTextView2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

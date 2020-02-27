@@ -27,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,13 +38,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-//import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+//import java.util.Calendar;
 
 public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final String TAG = "Main2Activity";
+
+    private static final String KEY_CAMERA_POSITION = "camera_position";
+    private static final String KEY_LOCATION = "location";
+    private CameraPosition mCameraPosition;
+    private Location mLastKnownLocation;
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
@@ -52,6 +59,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     private static final int REQUEST_CODE = 101;
 
     private GoogleMap mMap;
+    private double speed;
 
     private Button reportingButton;
     private Firebase mRootRef;
@@ -64,6 +72,15 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+//        Load maps previous position
+        if (savedInstanceState != null) {
+            currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
+
+
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 //        fetchLastLocation();
@@ -153,7 +170,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefTime.setValue(currentDateandTime);
                         childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
                                 ", Longitude: "+currentLocation.getLongitude());
-                        childRefSpeed.setValue("Speed KM/H");
+//                        childRefSpeed.setValue("Speed KM/H");
+                        childRefSpeed.setValue(speed);
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
                     }
@@ -201,6 +219,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             speedTextView.setText("0");
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
+//            speed = currentSpeed;
+            speed = Math.round(currentSpeed * 100.0) / 100.0;
             speedTextView.setText(String.format("%.2f", currentSpeed)+ "" );
             if (currentSpeed > 25){
                 speedStatusTextView.setText("Over Speeding");
@@ -291,6 +311,16 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (mMap != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
+//            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+            outState.putParcelable(KEY_LOCATION, currentLocation);
+            super.onSaveInstanceState(outState);
+        }
     }
 
     @Override

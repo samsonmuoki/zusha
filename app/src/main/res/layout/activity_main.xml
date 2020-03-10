@@ -16,8 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trackSpeedButton"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintTop_toBottomOf="@+id/scanqrcode" />
 
     <Button
         android:id="@+id/trackSpeedButton"
@@ -29,5 +28,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/scanqrcode"
+        android:layout_width="193dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="116dp"
+        android:text="SCAN QR CODE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trackSpeedButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

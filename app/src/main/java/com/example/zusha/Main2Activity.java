@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +61,9 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     private GoogleMap mMap;
     private double speed;
+    private double latitude;
+    private double longitude;
+
 
     private Button reportingButton;
     private Firebase mRootRef;
@@ -153,7 +157,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
 //                        Date currentTime = Calendar.getInstance().getTime();
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");
                         String currentDateandTime = sdf.format(new Date());
 
                         Firebase childReportId = mRootRef.child(String.valueOf(reportId));
@@ -168,8 +172,10 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefDriver.setValue(driverDetails);
                         childRefSacco.setValue(saccoDetails);
                         childRefTime.setValue(currentDateandTime);
-                        childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
-                                ", Longitude: "+currentLocation.getLongitude());
+//                        childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
+//                                ", Longitude: "+currentLocation.getLongitude());
+                        childRefLocation.setValue("Latitude: "+latitude+
+                                ", Longitude: "+longitude);
 //                        childRefSpeed.setValue("Speed KM/H");
                         childRefSpeed.setValue(speed);
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
@@ -211,8 +217,10 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         TextView speedTextView = (TextView) this.findViewById(R.id.speedTextView);
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
 
-        double longitude = currentLocation.getLongitude();
-        double latitude = currentLocation.getLatitude();
+//        double longitude = currentLocation.getLongitude();
+//        double latitude = currentLocation.getLatitude();
+        longitude = currentLocation.getLongitude();
+        latitude = currentLocation.getLatitude();
 
         if (location==null){
 
@@ -222,7 +230,9 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //            speed = currentSpeed;
             speed = Math.round(currentSpeed * 100.0) / 100.0;
             speedTextView.setText(String.format("%.2f", currentSpeed)+ "" );
-            if (currentSpeed > 25){
+            if (currentSpeed > 80){
+                Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(1000);
                 speedStatusTextView.setText("Over Speeding");
                 LatLng speedingLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(speedingLocation)

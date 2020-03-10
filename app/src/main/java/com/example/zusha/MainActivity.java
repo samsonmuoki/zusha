@@ -24,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(enterVehicleDetails);
             }
         });
+        Button scanqrcode = (Button) findViewById(R.id.scanqrcode);
+        scanqrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scanvehicledetails = new Intent(MainActivity.this, ScanVehicleDetailsActivity.class);
+                startActivity(scanvehicledetails);
+            }
+        });
 
         Button viewReportsButton = (Button) findViewById(R.id.viewReportButton);
         viewReportsButton.setOnClickListener(new View.OnClickListener() {

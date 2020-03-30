@@ -10,20 +10,21 @@
         android:id="@id/zxscan"
         android:layout_width="match_parent"
         android:layout_height="382dp"
-        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/scanned_details"
-        android:layout_width="156dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="298dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="TextView"
+        android:text="Please focus the camera on the vehicle QR code"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zxscan" />
 </androidx.constraintlayout.widget.ConstraintLayout>

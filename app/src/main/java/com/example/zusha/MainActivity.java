@@ -28,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
         scanqrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent scanvehicledetails = new Intent(MainActivity.this, ScanVehicleDetailsActivity.class);
-                startActivity(scanvehicledetails);
+//                Intent scanvehicledetails = new Intent(MainActivity.this, ScanVehicleDetailsActivity.class);
+//                startActivity(scanvehicledetails);
+                Intent scandetails = new Intent(MainActivity.this, ScanVehicleQRCode.class);
+                startActivity(scandetails);
             }
         });
 

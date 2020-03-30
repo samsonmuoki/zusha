@@ -4,27 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanVehicleDetailsActivity">
+    tools:context=".ScanVehicleQRCode">
 
-    <SurfaceView
-        android:id="@+id/camerapreview"
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@id/zxscan"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="120dp"
+        android:layout_height="382dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="361dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="60dp"
+        android:id="@+id/scanned_details"
+        android:layout_width="156dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="104dp"
         android:gravity="center"
-        android:text="Focus camera on the QR code"
-        android:textSize="24sp"
+        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/camerapreview" />
+        app:layout_constraintTop_toBottomOf="@+id/zxscan" />
 </androidx.constraintlayout.widget.ConstraintLayout>

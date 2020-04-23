@@ -70,8 +70,9 @@
 
     <Button
         android:id="@+id/enterVehicleDetailsButton"
-        android:layout_width="138dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/deeppurple"
         android:layout_marginTop="48dp"
         android:text="ENTER"
         app:layout_constraintEnd_toEndOf="parent"

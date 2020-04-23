@@ -8,9 +8,8 @@
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@id/zxscan"
-        android:layout_width="969dp"
-        android:layout_height="277dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +30,10 @@
 
     <Button
         android:id="@+id/typeVehicleDetailsBtn"
-        android:layout_width="330dp"
-        android:layout_height="62dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:background="@color/deeppurple"
         android:text="Manually Enter the vehicle details"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"

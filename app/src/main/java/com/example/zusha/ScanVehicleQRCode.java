@@ -35,14 +35,6 @@ public class ScanVehicleQRCode extends AppCompatActivity implements ZXingScanner
 
         scannerView = (ZXingScannerView)findViewById(R.id.zxscan);
         scanned_details = (TextView)findViewById(R.id.scanned_details);
-        Button typeVehicleDetailsButton = (Button)findViewById(R.id.typeVehicleDetailsBtn);
-        typeVehicleDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent enterVehicleDetails = new Intent(ScanVehicleQRCode.this, EnterVehicleDetailsActivity.class);
-                startActivity(enterVehicleDetails);
-            }
-        });
 
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)
@@ -64,6 +56,15 @@ public class ScanVehicleQRCode extends AppCompatActivity implements ZXingScanner
                     }
                 })
                 .check();
+
+        Button typeVehicleDetailsButton = (Button)findViewById(R.id.typeVehicleDetailsBtn);
+        typeVehicleDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent enterVehicleDetails = new Intent(ScanVehicleQRCode.this, EnterVehicleDetailsActivity.class);
+                startActivity(enterVehicleDetails);
+            }
+        });
     }
 
     @Override

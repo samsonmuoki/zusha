@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class ScanVehicleQRCode extends AppCompatActivity implements ZXingScanner
     private ZXingScannerView scannerView;
     private TextView scanned_details;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,14 @@ public class ScanVehicleQRCode extends AppCompatActivity implements ZXingScanner
 
         scannerView = (ZXingScannerView)findViewById(R.id.zxscan);
         scanned_details = (TextView)findViewById(R.id.scanned_details);
+        Button typeVehicleDetailsButton = (Button)findViewById(R.id.typeVehicleDetailsBtn);
+        typeVehicleDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent enterVehicleDetails = new Intent(ScanVehicleQRCode.this, EnterVehicleDetailsActivity.class);
+                startActivity(enterVehicleDetails);
+            }
+        });
 
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)

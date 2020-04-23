@@ -8,10 +8,11 @@
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@id/zxscan"
-        android:layout_width="match_parent"
-        android:layout_height="382dp"
+        android:layout_width="969dp"
+        android:layout_height="277dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,4 +28,30 @@
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zxscan" />
+
+    <Button
+        android:id="@+id/typeVehicleDetailsBtn"
+        android:layout_width="330dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="36dp"
+        android:text="Manually Enter the vehicle details"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/orTextView"
+        android:layout_width="179dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="or"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scanned_details" />
 </androidx.constraintlayout.widget.ConstraintLayout>

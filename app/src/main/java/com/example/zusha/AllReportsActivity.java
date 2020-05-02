@@ -18,7 +18,7 @@ public class AllReportsActivity extends AppCompatActivity {
         WebView myWebView = new WebView(AllReportsActivity.this);
         setContentView(myWebView);
 
-        myWebView.loadUrl("https://www.javatpoint.com");
+        myWebView.loadUrl("https://www.zusha.duckdns.org");
 
 
     }

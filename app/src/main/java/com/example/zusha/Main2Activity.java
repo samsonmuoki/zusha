@@ -72,10 +72,13 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     Report report;
     long reportId;
 
+    SQLiteDatabaseHelper mydb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        mydb = new SQLiteDatabaseHelper(this);
 
 //        Load maps previous position
         if (savedInstanceState != null) {
@@ -180,6 +183,14 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefSpeed.setValue(speed);
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
+
+                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude+"<=>"+longitude, speed, driverDetails);
+                        if(isInserted = true)
+                            Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(Main2Activity.this, "Data not recorded locally", Toast.LENGTH_LONG).show();
+
+
                     }
                 });
 

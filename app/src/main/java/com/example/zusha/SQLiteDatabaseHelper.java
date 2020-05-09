@@ -2,6 +2,7 @@ package com.example.zusha;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -50,5 +51,20 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public Cursor getAllData() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor res = db.rawQuery("select * from myreports", null);
+        return res;
+    }
+
+    public Cursor getReport(String caseId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " Where " + COL_1 + " = '" + caseId + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
     }
 }

@@ -79,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(reports);
             }
         });
+        CardView myReportsCard = (CardView) findViewById(R.id.myHistoryCard);
+        myReportsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewMyReports = new Intent(MainActivity.this, MyReports.class);
+                startActivity(viewMyReports);
+            }
+        });
+
 
     }
 }

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class MyReports extends AppCompatActivity {
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
             listData.add(data.getString(0));
-//            listData.add(data.getString(2));
+//            listData.add(data.getInt(0));
         }
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
@@ -54,45 +55,53 @@ public class MyReports extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
                 String caseId = adapterView.getItemAtPosition(i).toString();
+//                String caseId = adapterView.getItemAtPosition(i).toString();
 
                 Cursor data = mydb.getReport(caseId);
                 int itemID = -1;
-//                String regNo = data.getString(1);
-//                String sacco = data.getString(2);
-//                String time = data.getString(3);
-//                String location = data.getString(4);
-//                String speed = data.getString(5);
-//                String driver = data.getString(6);
+                String regNo = "";
+                String sacco = "";
+                String time = "";
+                String location = "";
+                String speed = "";
+                String driver = "";
 
                 while (data.moveToNext()){
                     itemID = data.getInt(0);
-//                    String regNo = data.getString(1);
-//                    String sacco = data.getString(2);
-//                    String time = data.getString(3);
-//                    String location = data.getString(4);
-//                    String speed = data.getString(5);
-//                    String driver = data.getString(6);
+                    regNo = data.getString(1);
+                    sacco = data.getString(2);
+                    time = data.getString(3);
+                    location = data.getString(4);
+                    speed = data.getString(5);
+                    driver = data.getString(6);
 
                 }
                 if(itemID > -1){
                     Log.d(TAG, "onItemClick: The Id is: " + itemID);
                     Intent viewSingleReport = new Intent(MyReports.this, SingleLocalReportActivity.class);
-                    viewSingleReport.putExtra("regNo", itemID);
-//                    viewSingleReport.putExtra("regNo", regNo);
-//                    viewSingleReport.putExtra("sacco", sacco);
-//                    viewSingleReport.putExtra("driver", driver);
-//                    viewSingleReport.putExtra("speed", speed);
-//                    viewSingleReport.putExtra("location", location);
-//                    viewSingleReport.putExtra("time", time);
+//                    viewSingleReport.putExtra("regNo", itemID);
+//                    viewSingleReport.putExtra("regNo", caseId);
+                    viewSingleReport.putExtra("regNo", regNo);
+                    viewSingleReport.putExtra("sacco", sacco);
+                    viewSingleReport.putExtra("driver", driver);
+                    viewSingleReport.putExtra("speed", speed);
+                    viewSingleReport.putExtra("location", location);
+                    viewSingleReport.putExtra("time", time);
 
                     startActivity(viewSingleReport);
                 }
                 else{
-//                    toastMessage("No ID associated with that report");
+                    toastMessage("No ID associated with that id");
                 }
             }
+
+
         });
 
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void viewMyReports() {

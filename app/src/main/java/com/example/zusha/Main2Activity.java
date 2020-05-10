@@ -42,8 +42,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//import java.util.Calendar;
-
 public class Main2Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final String TAG = "Main2Activity";
@@ -63,7 +61,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     private double speed;
     private double latitude;
     private double longitude;
-
 
     private Button reportingButton;
     private Firebase mRootRef;
@@ -85,9 +82,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-
-
-
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 //        fetchLastLocation();
@@ -184,7 +178,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
 
-                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude+"<=>"+longitude, speed, driverDetails);
+                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude+";"+longitude, speed, driverDetails);
                         if(isInserted = true)
                             Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
                         else
@@ -212,7 +206,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             }
             else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
                 //an error occured but we can resolve it
-                Log.d(TAG, "isServicesOK: an error occured but it can be resolved");
+                Log.d(TAG, "isServicesOK: an error occurred but it can be resolved");
                 Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(Main2Activity.this, available, ERROR_DIALOG_REQUEST);
                 dialog.show();
             }
@@ -235,7 +229,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
         if (location==null){
 
-            speedTextView.setText("0");
+            speedTextView.setText("50");
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
 //            speed = currentSpeed;

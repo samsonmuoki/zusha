@@ -64,6 +64,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getReport(String caseId){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " Where " + COL_1 + " = '" + caseId + "'";
+//        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " Where " + COL_2 + " = 'kaz'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }

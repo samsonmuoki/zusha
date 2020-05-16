@@ -2,6 +2,7 @@ package com.example.zusha;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -25,7 +26,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -63,6 +63,9 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     private double speed;
     private double latitude;
     private double longitude;
+    private String vehicle;
+    private String currentDateandTime;
+    private String sacco;
 
     private Button reportingButton;
     private Firebase mRootRef;
@@ -70,6 +73,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     DatabaseReference reff;
     Report report;
     long reportId;
+
 
     SQLiteDatabaseHelper mydb;
 
@@ -99,6 +103,9 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         final String regNoDetails = getIntent().getExtras().getString("regNoDetails");
         final String saccoDetails = getIntent().getExtras().getString("saccoDetails");
         final String driverDetails = getIntent().getExtras().getString("driverDetails");
+
+        vehicle = regNoDetails;
+        sacco = saccoDetails;
 
         regNoTextView.setText(regNoDetails);
         saccoTextView.setText(saccoDetails);
@@ -157,7 +164,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 //                        Date currentTime = Calendar.getInstance().getTime();
 
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");
-                        String currentDateandTime = sdf.format(new Date());
+                        currentDateandTime = sdf.format(new Date());
 
                         Firebase childReportId = mRootRef.child(String.valueOf(reportId));
                         Firebase childRefRegNo = childReportId.child("RegNo");
@@ -171,20 +178,23 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefDriver.setValue(driverDetails);
                         childRefSacco.setValue(saccoDetails);
                         childRefTime.setValue(currentDateandTime);
-//                        childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
-//                                ", Longitude: "+currentLocation.getLongitude());
                         childRefLocation.setValue("Latitude: " + latitude +
                                 ", Longitude: " + longitude);
 //                        childRefSpeed.setValue("Speed KM/H");
                         childRefSpeed.setValue(speed);
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
-                        Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Main2Activity.this, "Details successfully captured", Toast.LENGTH_SHORT).show();
 
                         boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude + ";" + longitude, speed, driverDetails);
                         if (isInserted = true)
                             Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(Main2Activity.this, "Data not recorded locally", Toast.LENGTH_LONG).show();
+
+
+                        // SEND EMAIL
+                        sendMessage();
+
                     }
                 });
 
@@ -192,6 +202,33 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
         }
 
+    }
+
+    private void sendMessage() {
+        final ProgressDialog dialog = new ProgressDialog(Main2Activity.this);
+        dialog.setTitle("Sending Report");
+        dialog.setMessage("Please wait");
+        dialog.show();
+
+        final String speedingLocation = latitude + ";" + longitude;
+        final String message = "Vehicle " + vehicle + " belonging to " + sacco +  " Sacco has been reported for speeding at " + speed + " KM/H in this location[" + speedingLocation + "] at " + currentDateandTime;
+
+        Thread sender = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MailSender sender = new MailSender("samsonmuoki97@gmail.com", "$$email_password$$");
+                    sender.sendMail("Zusha Report",
+                            "" + message,
+                            "samsonmuoki97@gmail.com",
+                            "samsonmuoki97@gmail.com");
+                    dialog.dismiss();
+                } catch (Exception e) {
+                    Log.e("mylog", "Error: " + e.getMessage());
+                }
+            }
+        });
+        sender.start();
     }
 
     public boolean isServicesOK() {
@@ -220,10 +257,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
         TextView locationTextView = (TextView) this.findViewById(R.id.locationTextView);
 
-//        longitude = currentLocation.getLongitude();
-//        latitude = currentLocation.getLatitude();
-//        locationTextView.setText(latitude + "; " + longitude);
-
         longitude = location.getLongitude();
         latitude = location.getLatitude();
         locationTextView.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
@@ -234,7 +267,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             speedTextView.setText("0");
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
-//            speed = currentSpeed;
             speed = Math.round(currentSpeed * 100.0) / 100.0;
             speedTextView.setText(String.format("%.2f", currentSpeed) + "");
             if (currentSpeed > 5) {
@@ -298,15 +330,10 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                     currentLocation = location;
                     double longitude = currentLocation.getLongitude();
                     double latitude = currentLocation.getLatitude();
-//                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
-//                    locationTextView.setText("Latitude: " + latitude + "\n Longitude: " + longitude);
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                             new LatLng(currentLocation.getLatitude(),
                                     currentLocation.getLongitude()), 15));
-//                    SupportMapFragment supportMapFragment = (SupportMapFragment)
-//                            getSupportFragmentManager().findFragmentById(R.id.map);
-//                    supportMapFragment.getMapAsync(Main2Activity.this);
                 }
             }
         });
@@ -356,7 +383,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
-//    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
 
     @Override
     public void onProviderEnabled(String provider) {
@@ -376,25 +402,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         updateLocationUI();
 
         fetchLastLocation();
-
-//        LatLng myLocation = new LatLng(latitude, longitude);
-////        LatLng myLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-//        googleMap.addMarker(new MarkerOptions().position(myLocation)
-//                .title("My Location"));
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(myLocation));
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 5));
-
-////        Adding multpiple markers in a google map
-//        LatLng myLocation = new LatLng(-1.484, 37.262);
-//        LatLng myLocation2 = new LatLng(-1.494, 37.272);
-//        LatLng myLocation3 = new LatLng(-1.504, 37.282);
-//        googleMap.addMarker(new MarkerOptions().position(myLocation)
-//                .title("My Location"));
-//        googleMap.addMarker(new MarkerOptions().position(myLocation2)
-//                .title("My Location2"));
-//        googleMap.addMarker(new MarkerOptions().position(myLocation3)
-//                .title("My Location3"));
 
     }
 

@@ -32,7 +32,6 @@ public class EnterVehicleDetailsActivity extends AppCompatActivity {
                 String driverDetails = driver;
 
                 Intent trackSpeed = new Intent(EnterVehicleDetailsActivity.this, Main2Activity.class);
-//                Intent trackSpeed = new Intent(EnterVehicleDetailsActivity.this, TrackSpeedActivity.class);
                 trackSpeed.putExtra("regNoDetails", regNoDetails);
                 trackSpeed.putExtra("saccoDetails", saccoDetails);
                 trackSpeed.putExtra("driverDetails", driverDetails);

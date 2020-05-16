@@ -60,7 +60,6 @@ public class SingleLocalReportActivity extends AppCompatActivity implements OnMa
         double longitude = Double.parseDouble(coordinates[1]);
 
         LatLng myLocation = new LatLng(latitude, longitude);
-//        LatLng myLocation = new LatLng(-1.484, 37.262);
         googleMap.addMarker(new MarkerOptions().position(myLocation)
                 .title("Speeding Location"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));

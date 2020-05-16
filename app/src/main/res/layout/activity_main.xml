@@ -150,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="View history of your reported cases"
+                    android:text="View cases I have reported"
                     android:padding="5dp"
                     android:textColor="@android:color/darker_gray"/>
 

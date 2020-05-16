@@ -126,6 +126,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Report" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="location"
+            android:layout_gravity="center"
+            android:id="@+id/locationTextView"/>
 
     </LinearLayout>
 

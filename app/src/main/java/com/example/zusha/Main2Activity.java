@@ -23,7 +23,9 @@ import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -109,8 +111,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                    reportId=(dataSnapshot.getChildrenCount());
+                if (dataSnapshot.exists())
+                    reportId = (dataSnapshot.getChildrenCount());
             }
 
             @Override
@@ -123,11 +125,11 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
         } else {
 
             //start the program if permission is granted
-            if(isServicesOK()){
+            if (isServicesOK()) {
                 trackSpeed();
                 fetchLastLocation();
 
@@ -171,20 +173,18 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefTime.setValue(currentDateandTime);
 //                        childRefLocation.setValue("Latitude: "+currentLocation.getLatitude()+
 //                                ", Longitude: "+currentLocation.getLongitude());
-                        childRefLocation.setValue("Latitude: "+latitude+
-                                ", Longitude: "+longitude);
+                        childRefLocation.setValue("Latitude: " + latitude +
+                                ", Longitude: " + longitude);
 //                        childRefSpeed.setValue("Speed KM/H");
                         childRefSpeed.setValue(speed);
 //                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Case successfully reported", Toast.LENGTH_SHORT).show();
 
-                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude+";"+longitude, speed, driverDetails);
-                        if(isInserted = true)
+                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude + ";" + longitude, speed, driverDetails);
+                        if (isInserted = true)
                             Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(Main2Activity.this, "Data not recorded locally", Toast.LENGTH_LONG).show();
-
-
                     }
                 });
 
@@ -194,54 +194,56 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     }
 
-        public boolean isServicesOK(){
-            Log.d(TAG, "isServicesOK: checking google services version");
+    public boolean isServicesOK() {
+        Log.d(TAG, "isServicesOK: checking google services version");
 
-            int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(Main2Activity.this);
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(Main2Activity.this);
 
-            if(available == ConnectionResult.SUCCESS){
-                //everything is fine and user can make map requests
-                Log.d(TAG, "isServicesOK: Google Play Services is working");
-                return true;
-            }
-            else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-                //an error occured but we can resolve it
-                Log.d(TAG, "isServicesOK: an error occurred but it can be resolved");
-                Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(Main2Activity.this, available, ERROR_DIALOG_REQUEST);
-                dialog.show();
-            }
-            else{
-                Toast.makeText(this,"You can't make map requests", Toast.LENGTH_SHORT).show();
-            }
-            return false;
+        if (available == ConnectionResult.SUCCESS) {
+            //everything is fine and user can make map requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            //an error occured but we can resolve it
+            Log.d(TAG, "isServicesOK: an error occurred but it can be resolved");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(Main2Activity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
         }
-
+        return false;
+    }
 
     @Override
     public void onLocationChanged(Location location) {
         TextView speedTextView = (TextView) this.findViewById(R.id.speedTextView);
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
+        TextView locationTextView = (TextView) this.findViewById(R.id.locationTextView);
 
-//        double longitude = currentLocation.getLongitude();
-//        double latitude = currentLocation.getLatitude();
-        longitude = currentLocation.getLongitude();
-        latitude = currentLocation.getLatitude();
+//        longitude = currentLocation.getLongitude();
+//        latitude = currentLocation.getLatitude();
+//        locationTextView.setText(latitude + "; " + longitude);
 
-        if (location==null){
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
+        locationTextView.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
 
-            speedTextView.setText("50");
+        // TRACK SPEED
+        if (location == null) {
+
+            speedTextView.setText("0");
         } else {
             float currentSpeed = location.getSpeed() * 3.6f;
 //            speed = currentSpeed;
             speed = Math.round(currentSpeed * 100.0) / 100.0;
-            speedTextView.setText(String.format("%.2f", currentSpeed)+ "" );
-            if (currentSpeed > 80){
-                Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+            speedTextView.setText(String.format("%.2f", currentSpeed) + "");
+            if (currentSpeed > 5) {
+                Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(1000);
                 speedStatusTextView.setText("Over Speeding");
-                LatLng speedingLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                LatLng speedingLocation = new LatLng(latitude, longitude);
                 mMap.addMarker(new MarkerOptions().position(speedingLocation)
-                .title("Over speeding Location"));
+                        .title("Over speeding Location"));
             } else {
                 speedStatusTextView.setText("Below Limit");
             }
@@ -273,7 +275,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     }
 
-    private void updateLocationUI(){
+    private void updateLocationUI() {
         if (mMap == null) {
             return;
         }
@@ -292,12 +294,12 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location != null){
+                if (location != null) {
                     currentLocation = location;
                     double longitude = currentLocation.getLongitude();
                     double latitude = currentLocation.getLatitude();
 //                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
-//                    locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
+//                    locationTextView.setText("Latitude: " + latitude + "\n Longitude: " + longitude);
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                             new LatLng(currentLocation.getLatitude(),
@@ -311,11 +313,21 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
 
     }
 
-    private void trackSpeed(){
+    private void trackSpeed() {
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        if (lm != null){
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
+        if (lm != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             //commented, this is from the old version
             // this.onLocationChanged(null);
         }
@@ -337,6 +349,14 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             super.onSaveInstanceState(outState);
         }
     }
+
+    protected void createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+//    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
 
     @Override
     public void onProviderEnabled(String provider) {

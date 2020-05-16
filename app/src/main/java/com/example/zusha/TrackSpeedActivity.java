@@ -254,15 +254,15 @@
 ////            return;
 ////        }
 //        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-//        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+//        task.addOnSuccessListener(this, new OnSuccessListener<Location>() {
 //            @Override
 //            public void onSuccess(Location location) {
 //                if (location != null){
 //                    currentLocation = location;
 //                    double longitude = currentLocation.getLongitude();
 //                    double latitude = currentLocation.getLatitude();
-////                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
-////                    locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
+//                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+//                    locationTextView.setText("Latitude: "+latitude+"\n Longitude: "+longitude);
 //
 //                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
 //                            new LatLng(currentLocation.getLatitude(),

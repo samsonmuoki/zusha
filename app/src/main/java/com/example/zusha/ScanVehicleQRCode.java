@@ -84,10 +84,12 @@ public class ScanVehicleQRCode extends AppCompatActivity implements ZXingScanner
         String[] vehicleDetails = mat_details.split(",");
         String regNo = vehicleDetails[0];
         String sacco = vehicleDetails[1];
+        String email = vehicleDetails[2];
 
         Intent trackSpeed = new Intent(ScanVehicleQRCode.this, Main2Activity.class);
         trackSpeed.putExtra("regNoDetails", regNo);
         trackSpeed.putExtra("saccoDetails", sacco);
+        trackSpeed.putExtra("email", email);
         startActivity(trackSpeed);
 
     }

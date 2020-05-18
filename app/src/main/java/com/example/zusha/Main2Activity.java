@@ -66,6 +66,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     private String vehicle;
     private String currentDateandTime;
     private String sacco;
+    private String saccoEmail;
 
     private Button reportingButton;
     private Firebase mRootRef;
@@ -103,6 +104,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
         final String regNoDetails = getIntent().getExtras().getString("regNoDetails");
         final String saccoDetails = getIntent().getExtras().getString("saccoDetails");
         final String driverDetails = getIntent().getExtras().getString("driverDetails");
+        saccoEmail = getIntent().getExtras().getString("email");
 
         vehicle = regNoDetails;
         sacco = saccoDetails;
@@ -161,7 +163,10 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                     @Override
                     public void onClick(View v) {
 
-//                        Date currentTime = Calendar.getInstance().getTime();
+                        // SEND EMAIL
+                        sendMessage();
+
+                        // Date currentTime = Calendar.getInstance().getTime();
 
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");
                         currentDateandTime = sdf.format(new Date());
@@ -180,9 +185,8 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         childRefTime.setValue(currentDateandTime);
                         childRefLocation.setValue("Latitude: " + latitude +
                                 ", Longitude: " + longitude);
-//                        childRefSpeed.setValue("Speed KM/H");
                         childRefSpeed.setValue(speed);
-//                        reff.child(String.valueOf(reportId+1)).setValue("Reports");
+                        // reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Details successfully captured", Toast.LENGTH_SHORT).show();
 
                         boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude + ";" + longitude, speed, driverDetails);
@@ -190,10 +194,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                             Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(Main2Activity.this, "Data not recorded locally", Toast.LENGTH_LONG).show();
-
-
-                        // SEND EMAIL
-                        sendMessage();
 
                     }
                 });
@@ -217,11 +217,11 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
             @Override
             public void run() {
                 try {
-                    MailSender sender = new MailSender("samsonmuoki97@gmail.com", "$$email_password$$");
+                    MailSender sender = new MailSender("testzusha@gmail.com", "PlainPassword");
                     sender.sendMail("Zusha Report",
                             "" + message,
-                            "samsonmuoki97@gmail.com",
-                            "samsonmuoki97@gmail.com");
+                            "testzusha@gmail.com",
+                            "" + saccoEmail);
                     dialog.dismiss();
                 } catch (Exception e) {
                     Log.e("mylog", "Error: " + e.getMessage());

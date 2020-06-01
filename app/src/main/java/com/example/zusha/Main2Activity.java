@@ -166,7 +166,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         // SEND EMAIL
                         sendMessage();
 
-                        // Date currentTime = Calendar.getInstance().getTime();
 
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");
                         currentDateandTime = sdf.format(new Date());
@@ -180,7 +179,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         Firebase childRefDriver = childReportId.child("Driver");
 
                         childRefRegNo.setValue(regNoDetails);
-                        childRefDriver.setValue(driverDetails);
+//                        childRefDriver.setValue(driverDetails);
                         childRefSacco.setValue(saccoDetails);
                         childRefTime.setValue(currentDateandTime);
                         childRefLocation.setValue("Latitude: " + latitude +
@@ -189,7 +188,7 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                         // reff.child(String.valueOf(reportId+1)).setValue("Reports");
                         Toast.makeText(Main2Activity.this, "Details successfully captured", Toast.LENGTH_SHORT).show();
 
-                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude + ";" + longitude, speed, driverDetails);
+                        boolean isInserted = mydb.insertData(regNoDetails, saccoDetails, currentDateandTime, latitude + ";" + longitude, speed);
                         if (isInserted = true)
                             Toast.makeText(Main2Activity.this, "Data recorded locally", Toast.LENGTH_LONG).show();
                         else
@@ -255,11 +254,9 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
     public void onLocationChanged(Location location) {
         TextView speedTextView = (TextView) this.findViewById(R.id.speedTextView);
         TextView speedStatusTextView = (TextView) this.findViewById(R.id.speedStatusTextView);
-        TextView locationTextView = (TextView) this.findViewById(R.id.locationTextView);
 
         longitude = location.getLongitude();
         latitude = location.getLatitude();
-        locationTextView.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
 
         // TRACK SPEED
         if (location == null) {
@@ -355,8 +352,6 @@ public class Main2Activity extends AppCompatActivity implements LocationListener
                 return;
             }
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            //commented, this is from the old version
-            // this.onLocationChanged(null);
         }
         Toast.makeText(this,"Waiting for GPS connection!", Toast.LENGTH_SHORT).show();
 

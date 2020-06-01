@@ -36,7 +36,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String REGNO, String SACCO, String TIME, String LOCATION, double SPEED, String DRIVER){
+    public boolean insertData(String REGNO, String SACCO, String TIME, String LOCATION, double SPEED){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, REGNO);
@@ -44,7 +44,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_4, TIME);
         contentValues.put(COL_5, LOCATION);
         contentValues.put(COL_6, SPEED);
-        contentValues.put(COL_7, DRIVER);
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         if(result == -1)
@@ -54,9 +53,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getAllData() {
-//        SQLiteDatabase db = this.getWritableDatabase();
         SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         Cursor res = db.rawQuery("select * from myreports", null);
         return res;
     }
@@ -64,7 +61,6 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getReport(String caseId){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " Where " + COL_1 + " = '" + caseId + "'";
-//        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " Where " + COL_2 + " = 'kaz'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }

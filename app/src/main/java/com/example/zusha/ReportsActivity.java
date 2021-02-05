@@ -48,7 +48,9 @@ public class ReportsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String sacco = searchSaccoEditText.getText().toString();
-                String url = "zusha.duckdns.org/reports/saccos/" + sacco;
+//                String url = "zusha.duckdns.org/reports/saccos/" + sacco;
+                String url = "zusha.duckdns.org/reports/saccos/";
+
 
                 Intent viewReports = new Intent(ReportsActivity.this, AllReportsActivity.class);
                 viewReports.putExtra("url", url);

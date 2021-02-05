@@ -45,6 +45,7 @@ public class MyReports extends AppCompatActivity {
         Cursor data = mydb.getAllData();
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
+//            listData.add(data.getString(1));
             listData.add(data.getString(0));
 //            listData.add(data.getInt(0));
         }
